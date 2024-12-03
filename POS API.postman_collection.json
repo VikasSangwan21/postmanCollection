@@ -259,6 +259,117 @@
 							"pm.test(\"Response should be an array\", () => {\r",
 							"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
 							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Each item should have valid delivery details\", () => {\r",
+							"    const response = pm.response.json();\r",
+							"\r",
+							"    response.forEach(item => {\r",
+							"        // Validate keys exist\r",
+							"        pm.expect(item).to.have.property(\"deliveryService\");\r",
+							"        pm.expect(item).to.have.property(\"zone\");\r",
+							"        pm.expect(item).to.have.property(\"estimateDelivery\");\r",
+							"        pm.expect(item).to.have.property(\"HandlingCharge\");\r",
+							"        pm.expect(item).to.have.property(\"FuelCharge\");\r",
+							"        pm.expect(item).to.have.property(\"EssCharge\");\r",
+							"        pm.expect(item).to.have.property(\"totalCharge\");\r",
+							"        pm.expect(item).to.have.property(\"postage\");\r",
+							"        pm.expect(item).to.have.property(\"maxWeight\");\r",
+							"        pm.expect(item).to.have.property(\"limitOfInsuran\");\r",
+							"        pm.expect(item).to.have.property(\"trackNTrace\");\r",
+							"        pm.expect(item).to.have.property(\"name\");\r",
+							"        pm.expect(item).to.have.property(\"showOutletLocatorButton\");\r",
+							"        pm.expect(item).to.have.property(\"isDomestic\");\r",
+							"        pm.expect(item).to.have.property(\"totalAmount\");\r",
+							"\r",
+							"        // Validate types\r",
+							"        pm.expect(item.deliveryService).to.be.a(\"string\");\r",
+							"        pm.expect(item.zone).to.be.a(\"string\");\r",
+							"        pm.expect(item.estimateDelivery).to.be.a(\"string\");\r",
+							"        pm.expect(item.HandlingCharge).to.be.a(\"string\");\r",
+							"        pm.expect(item.FuelCharge).to.be.a(\"string\");\r",
+							"        pm.expect(item.EssCharge).to.be.a(\"string\");\r",
+							"        pm.expect(item.totalCharge).to.be.a(\"string\");\r",
+							"        pm.expect(item.postage).to.be.a(\"string\");\r",
+							"        pm.expect(item.maxWeight).to.be.a(\"string\");\r",
+							"        pm.expect(item.limitOfInsuran).to.be.a(\"string\");\r",
+							"        pm.expect(item.trackNTrace).to.be.a(\"string\");\r",
+							"        pm.expect(item.name).to.be.a(\"string\");\r",
+							"        pm.expect(item.showOutletLocatorButton).to.be.a(\"boolean\");\r",
+							"        pm.expect(item.isDomestic).to.be.a(\"boolean\");\r",
+							"        pm.expect(item.totalAmount).to.be.a(\"string\");\r",
+							"\r",
+							"        // Validate specific values\r",
+							"        pm.expect(item.trackNTrace).to.equal(\"YES\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate specific services exist\", () => {\r",
+							"    const response = pm.response.json();\r",
+							"    const expectedServices = [\r",
+							"        \"EMS - Merchandise\",\r",
+							"        \"Parcel (Air)\",\r",
+							"        \"Parcel (Surface)\"\r",
+							"    ];\r",
+							"\r",
+							"    const deliveryServices = response.map(item => item.deliveryService);\r",
+							"    expectedServices.forEach(service => {\r",
+							"        pm.expect(deliveryServices).to.include(service);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"country\": \"India\", \"weight\": 17}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/price",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"price"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CalculatePriceInvalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response should be an array\", () => {\r",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript",
